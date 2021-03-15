@@ -83,6 +83,10 @@ class AlienInvasion:
         #print(len(self.bullets))       --this is to check to see in terminal if bullets are actually decreasing as they hit the top of the screen
         #check for any bullets that have hit aliens and if so get rid of both
         collisions = pygame.sprite.groupcollide(self.bullets,self.aliens,True,True)
+        if not self.aliens():
+            #destroy existing bullets and create new fleet
+            self.bullets.empty()
+            self._create_fleet()
 
     def _create_fleet(self):
         #create the fleet
