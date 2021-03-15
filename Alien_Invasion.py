@@ -134,6 +134,15 @@ class AlienInvasion:
             if alien.check_edges():
                 self._change_fleet_direction()
                 break
+    
+    def _check_aliens_bottom(self):
+        #check to see if any aliens have reached the bottom of the screen
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                #treat this the same as if the ship got hit
+                self._ship_hit()
+                break
 
     def _change_fleet_direction(self):
         #Drop the entire fleet and change the fleet's direction
@@ -150,6 +159,9 @@ class AlienInvasion:
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             #print("Ship hit!!!")
             self._ship_hit()
+        
+        #look for aliens hitting the bottom of the screen
+        self._check_aliens_bottom()
 
     def _ship_hit(self):
         #respond to the ship being hit by an alien
