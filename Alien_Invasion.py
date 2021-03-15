@@ -1,6 +1,10 @@
 import sys
+from time import sleep
+
 import pygame
+
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -21,6 +25,10 @@ class AlienInvasion:
             #the (1200,800) is a tuple that defines the dimensions of the game window
             #this means that the window will be 1200 pixels wide by 800 pixels high
         pygame.display.set_caption("Alien Invasion")
+
+        #create an instance to store game statistics
+        self.stats = GameStats(self)
+
         #Setting the background color:
         self.bg_color = (230,230,230)
         self.ship = Ship(self)
@@ -141,6 +149,22 @@ class AlienInvasion:
         #look for alien-ship collisions
         if pygame.sprite.spritecollideany(self.ship, self.aliens):
             print("Ship hit!!!")
+
+    def _ship_hit():
+        #respond to the ship being hit by an alien
+        #decrement ships_left
+        self.stats.ships_left -= 1
+
+        #get rid of any remaining aliens and bullets
+        self.aliens.empty()
+        self.bullets.empty()
+
+        #create new fleet and repos ship
+        self._create_fleet()
+        self.ship.center_ship()
+
+        #pause
+        sleep(0.5)
 
     def _update_screen(self):
         #Redraw the screen during each pass through the loop:
