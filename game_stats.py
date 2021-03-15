@@ -6,7 +6,7 @@ class GameStats:
         self.reset_stats()
 
         #start the game in an inactive state
-        self.game_active = Frue
+        self.game_active = False
 
     def reset_stats(self):
         #initialize stats that can change during game
