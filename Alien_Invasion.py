@@ -5,6 +5,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from button import Button
 from ship import Ship
 from bullet import Bullet
@@ -27,8 +28,9 @@ class AlienInvasion:
             #this means that the window will be 1200 pixels wide by 800 pixels high
         pygame.display.set_caption("Alien Invasion")
 
-        #create an instance to store game statistics
+        #create an instance to store game statistics, and create a scoreboard
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         #Setting the background color:
         self.bg_color = (230,230,230)
@@ -227,6 +229,9 @@ class AlienInvasion:
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.aliens.draw(self.screen)
+
+        #draw the score information
+        self.sb.show_score()
 
         #draw the play button if the game is inactive
         if not self.stats.game_active:
