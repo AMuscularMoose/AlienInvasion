@@ -12,9 +12,11 @@ class AlienInvasion:
         #initialize the game and create the game resources
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
-        self.settings.screen_width = self.screen.get_rect().width
-        self.settings.screen_height = self.screen.get_rect().height
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        #FULLSCREEN OPTION BELOW
+        #self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+        #self.settings.screen_width = self.screen.get_rect().width
+        #self.settings.screen_height = self.screen.get_rect().height
             #old settings code: self.screen = pygame.display.set_mode((1200,800))
             #the (1200,800) is a tuple that defines the dimensions of the game window
             #this means that the window will be 1200 pixels wide by 800 pixels high
@@ -29,7 +31,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
+            self._update_bullets()
             self._update_screen()
             
     def _check_events(self):
@@ -62,8 +64,19 @@ class AlienInvasion:
 
     def _fire_bullet(self):
         #create a new bullet and add it to the bullets group
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        #update the position of bullets and get rid of old bullets
+        self.bullets.update()
+        
+        #get rid of bullets that dissapeared
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        #print(len(self.bullets))       --this is to check to see in terminal if bullets are actually decreasing as they hit the top of the screen
 
     def _update_screen(self):
         #Redraw the screen during each pass through the loop:
