@@ -81,6 +81,8 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
         #print(len(self.bullets))       --this is to check to see in terminal if bullets are actually decreasing as they hit the top of the screen
+        #check for any bullets that have hit aliens and if so get rid of both
+        collisions = pygame.sprite.groupcollide(self.bullets,self.aliens,True,True)
 
     def _create_fleet(self):
         #create the fleet
@@ -124,7 +126,8 @@ class AlienInvasion:
         self.settings.fleet_direction *= -1
 
     def _update_aliens(self):
-        #update the pos of all aliens in the fleet
+        #update the pos of all aliens in the fleet after edge checking
+        self._check_fleet_edges()
         self.aliens.update()
 
     def _update_screen(self):

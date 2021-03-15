@@ -23,7 +23,7 @@ class Alien(Sprite):
 
     def check_edges(self):
         #return True is alien is at the edge of the screen
-        screen_rect = sxelf.screen.get_rect()
+        screen_rect = self.screen.get_rect()
         if self.rect.right >= screen_rect.right or self.rect.left <= 0:
             return True
 
