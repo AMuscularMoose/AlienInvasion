@@ -83,6 +83,10 @@ class AlienInvasion:
             self._create_fleet()
             self.ship.center_ship()
 
+            #hide the mouse cursor
+            pygame.mouse.set_visible(False)
+                #tells pygame to hide the mouse cursor
+
     def _check_keydown_events(self,event):
         #respond to keypresses
         if event.key == pygame.K_RIGHT:
@@ -209,7 +213,8 @@ class AlienInvasion:
 
         else:
             self.stats.game_active = False
-
+            pygame.mouse.set_visible(True)
+                #make the mouse cursor visible again when game is over
 
     def _update_screen(self):
         #Redraw the screen during each pass through the loop:
