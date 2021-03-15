@@ -165,19 +165,24 @@ class AlienInvasion:
 
     def _ship_hit(self):
         #respond to the ship being hit by an alien
-        #decrement ships_left
-        self.stats.ships_left -= 1
+        if self.stats.ships_left > 0:
+            #decrement ships_left
+            self.stats.ships_left -= 1
 
-        #get rid of any remaining aliens and bullets
-        self.aliens.empty()
-        self.bullets.empty()
+            #get rid of any remaining aliens and bullets
+            self.aliens.empty()
+            self.bullets.empty()
 
-        #create new fleet and repos ship
-        self._create_fleet()
-        self.ship.center_ship()
+            #create new fleet and repos ship
+            self._create_fleet()
+            self.ship.center_ship()
 
-        #pause
-        sleep(0.5)
+            #pause
+            sleep(0.5)
+            
+        else:
+            self.stats.game_active = False
+
 
     def _update_screen(self):
         #Redraw the screen during each pass through the loop:
