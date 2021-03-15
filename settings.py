@@ -44,3 +44,4 @@ class Settings:
         self.alien_speed *= self.speedup_scale
 
         self.alien_points = int(self.alien_points * self.score_scale)
+        #print(self.alien_points)   --This is to check the terminal to see your score when you beat a level.
